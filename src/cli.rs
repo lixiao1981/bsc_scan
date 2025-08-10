@@ -23,4 +23,13 @@ pub enum Commands {
         #[arg(value_name = "BLOCK_NUMBER")]
         block: u64,
     },
+    /// 输出该区块内所有交易的 to（原始 Address，合约创建为 None）
+    Tos {
+        /// 数据目录路径（包含 reth/bsc 数据库）
+        #[arg(long, value_name = "PATH")]
+        db_path: String,
+        /// 区块号
+        #[arg(value_name = "BLOCK_NUMBER")]
+        block: u64,
+    },
 }

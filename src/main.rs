@@ -35,6 +35,16 @@ fn run() -> Result<()> {
                 }
             }
         }
+        Commands::Tos { db_path, block } => {
+            let db = BscDatabase::new(db_path)?;
+            let tos = bsc_scan::al::analyze_block_transactions_with_to(&db, block)?;
+            for (i, to) in tos.iter().enumerate() {
+                match to {
+                    Some(addr) => println!("{}: {:#x}", i, addr),
+                    None => println!("{}: None", i),
+                }
+            }
+        }
     }
 
     Ok(())

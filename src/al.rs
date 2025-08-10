@@ -94,3 +94,11 @@ pub fn analyze_block(db: &BscDatabase, block_number: u64) -> Result<Vec<Analyzed
 	Ok(analyze_txs(block_number, txs))
 }
 
+pub fn analyze_block_transactions_with_to(
+	db: &BscDatabase,
+	block_number: u64,
+) -> Result<Vec<Option<Address>>> {
+	let txs = db.query_block_order_transactions(block_number)?;
+	let addrs: Vec<Option<Address>> = txs.into_iter().map(|tx| tx.to()).collect();
+	Ok(addrs)
+}
