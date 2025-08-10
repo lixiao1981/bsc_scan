@@ -1725,6 +1725,7 @@ dependencies = [
 name = "bsc_scan"
 version = "0.1.0"
 dependencies = [
+ "alloy-consensus",
  "alloy-json-rpc",
  "alloy-primitives",
  "clap",
