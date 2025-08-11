@@ -3,9 +3,7 @@ use eyre::{Context, Result};
 use std::sync::Arc;
 use std::path::Path;
 
-use reth_node_ethereum::{
-    node::EthereumNode,
-};
+use reth_node_ethereum::node::EthereumNode;
 use reth_chainspec::ChainSpecBuilder;
 use reth_provider::{
     providers::ReadOnlyConfig,
@@ -15,6 +13,7 @@ use reth_provider::{
 use reth_node_api::NodeTypesWithDBAdapter;
 use reth_db::DatabaseEnv;
 use reth_primitives::{Header, TransactionSigned};
+use reth_ethereum_primitives::Receipt as EthReceipt;
 
 
 
@@ -147,6 +146,15 @@ impl BscDatabase {
         Ok(())
     }
     
+    /// 根据交易哈希读取 receipt（自动从 MDBX 或 static_files）
+    pub fn receipt_by_hash(&self, tx_hash: B256) -> Result<Option<EthReceipt>> {
+        let provider = self.provider_factory.provider()?;
+        // 先将 TxHash 映射为内部 TxNumber
+        match provider.transaction_id(tx_hash)? {
+            Some(tx_num) => Ok(provider.receipt(tx_num)?),
+            None => Ok(None),
+        }
+    }
 
     /// 根据区块号返回该区块的数据（头 + 交易数量）。不存在则返回 None。
     pub fn query_headers_with_blocknumber(&self, block_number: u64) -> Result<Option<BlockData>> {

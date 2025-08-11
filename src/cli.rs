@@ -32,4 +32,13 @@ pub enum Commands {
         #[arg(value_name = "BLOCK_NUMBER")]
         block: u64,
     },
+    /// 从 static_files 中测试读取 receipts 段并打印摘要
+    ReceiptsTest {
+        /// static_files 目录（通常是 <db_path>/static_files）
+        #[arg(long, value_name = "PATH")]
+        static_dir: String,
+        /// 任意位于该段内的块号（用于定位段文件）
+        #[arg(value_name = "BLOCK_NUMBER")]
+        block: u64,
+    },
 }

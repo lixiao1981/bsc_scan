@@ -45,6 +45,9 @@ fn run() -> Result<()> {
                 }
             }
         }
+        Commands::ReceiptsTest { static_dir, block } => {
+            bsc_scan::receipts::test_receipts(static_dir, block)?;
+        }
     }
 
     Ok(())
