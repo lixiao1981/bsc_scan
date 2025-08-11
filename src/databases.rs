@@ -431,20 +431,28 @@ pub fn run_bsc_database_tests<P: AsRef<Path>>(db_path: P) -> Result<()> {
 }
 
 
+pub fn test_receipts(db_path: impl AsRef<Path>, block_number: u64) -> eyre::Result<()> {
+    // 打开数据库（只读）
+    let db = BscDatabase::new(db_path)?;
+    let provider = db.provider_factory.provider()?;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    
-    #[test]
-    fn test_node_type_classification() {
-        // These would need actual database paths to run
-        // Keeping as example structure
+    match provider.receipts_by_block(block_number.into())? {
+        Some(receipts) => {
+            for (i, receipt) in receipts.iter().enumerate() {
+                println!(
+                    "idx={} tx_type={:?} success={} cumulative_gas_used={} logs={}",
+                    i,
+                    receipt.tx_type,
+                    receipt.success,
+                    receipt.cumulative_gas_used,
+                    receipt.logs.len(),
+                );
+            }
+        }
+        None => {
+            println!("No receipts found for block {}", block_number);
+        }
     }
-    
-    #[test]
-    fn test_safe_block_generation() {
-        // Test the safe block number generation logic
-        // This can be unit tested without database
-    }
+
+    Ok(())
 }

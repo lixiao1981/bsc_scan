@@ -16,9 +16,9 @@ pub struct Cli {
 pub enum Commands {
     /// 根据区块号查询区块头与交易数量
     Header {
-    /// 数据目录路径（包含 reth/bsc 数据库）
-    #[arg(long, value_name = "PATH")]
-    db_path: String,
+        /// 数据目录路径（包含 reth/bsc 数据库）
+        #[arg(long, value_name = "PATH")]
+        db_path: String,
         /// 区块号
         #[arg(value_name = "BLOCK_NUMBER")]
         block: u64,
@@ -32,12 +32,12 @@ pub enum Commands {
         #[arg(value_name = "BLOCK_NUMBER")]
         block: u64,
     },
-    /// 从 static_files 中测试读取 receipts 段并打印摘要
+    /// 使用 provider 读取并打印该区块 receipts 摘要（自动从 MDBX/static_files 获取）
     ReceiptsTest {
-        /// static_files 目录（通常是 <db_path>/static_files）
+        /// 数据目录路径（包含 reth/bsc 数据库）
         #[arg(long, value_name = "PATH")]
-        static_dir: String,
-        /// 任意位于该段内的块号（用于定位段文件）
+        db_path: String,
+        /// 区块号
         #[arg(value_name = "BLOCK_NUMBER")]
         block: u64,
     },
