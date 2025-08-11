@@ -19,7 +19,6 @@ pub fn demo_common(datadir: impl AsRef<Path>, block_number: u64, tx_hash: Option
         .open_read_only(spec.into(), ReadOnlyConfig::from_datadir(datadir))
         .context("open_read_only provider factory")?;
     let provider = factory.provider().context("get read-only provider")?;
-
     // 1) 基本高度/区块头
     let latest = provider.best_block_number().context("best_block_number")?;
     tracing::info!(latest, "latest block number");
