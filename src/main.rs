@@ -45,8 +45,11 @@ fn run() -> Result<()> {
                 }
             }
         }
-        Commands::ReceiptsTest { db_path, block } => {
-            bsc_scan::receipts::test_receipts(db_path, block)?;
+        Commands::ReceiptsTest { static_dir, block } => {
+            bsc_scan::receipts::test_receipts(static_dir, block)?;
+        }
+        Commands::TransactionsTest { static_dir, block } => {
+            bsc_scan::tranactions::test_transactions(static_dir, block)?;
         }
     }
 
