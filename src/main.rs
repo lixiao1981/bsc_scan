@@ -57,6 +57,13 @@ fn run() -> Result<()> {
                 .and_then(|s| s.parse().ok());
             bsc_scan::cube_med::demo_common(db_path, block, tx_hash_opt)?;
         }
+        Commands::ScanCt { db_path } => {
+            bsc_scan::scan_ct::scan_contract_creations(db_path)?;
+        }
+        Commands::ScanCtBlock { db_path, block } => {
+            let db = BscDatabase::new(db_path)?;
+            bsc_scan::scan_ct::print_block_contract_creations(&db, block)?;
+        }
     }
 
     Ok(())

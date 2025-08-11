@@ -1733,6 +1733,7 @@ dependencies = [
  "reth",
  "reth-chainspec",
  "reth-db",
+ "reth-db-api",
  "reth-db-models",
  "reth-ethereum-primitives",
  "reth-node-api",

@@ -62,4 +62,19 @@ pub enum Commands {
         #[arg(long, value_name = "TX_HASH")] 
         tx: Option<String>,
     },
+    /// 扫描所有合约创建交易（遍历 Transactions 表，to == None）
+    ScanCt {
+        /// 数据目录路径（包含 db 子目录）
+        #[arg(long, value_name = "PATH")]
+        db_path: String,
+    },
+    /// 扫描指定区块内所有交易是否为合约创建
+    ScanCtBlock {
+        /// 数据目录路径（包含 reth/bsc 数据库）
+        #[arg(long, value_name = "PATH")]
+        db_path: String,
+        /// 区块号
+        #[arg(value_name = "BLOCK_NUMBER")]
+        block: u64,
+    },
 }
