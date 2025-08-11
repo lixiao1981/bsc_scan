@@ -12,8 +12,19 @@ use reth_provider::BlockBodyIndicesProvider;
 
 /// 从 static_files 的 Transactions 段精准读取某区块的所有交易并打印摘要
 /// 注意：传入的是数据目录路径（包含 static_files 子目录）
-pub fn test_transactions(db_path: impl AsRef<Path>, block_number: u64) -> Result<()> {
-    let db_path = db_path.as_ref();
+pub fn test_transactions(path: impl AsRef<Path>, block_number: u64) -> Result<()> {
+    let p = path.as_ref();
+    // 兼容传入数据目录或 static_files 目录
+    let db_path;
+    let static_dir;
+    let candidate = p.join("static_files");
+    if candidate.is_dir() {
+        db_path = p;
+        static_dir = candidate;
+    } else {
+        db_path = p;
+        static_dir = p.to_path_buf();
+    }
 
     // 1) 使用 provider 查询该区块的交易范围（起始 tx 编号与 tx 数量）
     let db = BscDatabase::new(db_path)?;
@@ -28,7 +39,6 @@ pub fn test_transactions(db_path: impl AsRef<Path>, block_number: u64) -> Result
     let end_tx = start_tx + tx_count;
 
     // 2) 打开包含该区块的 Transactions 段
-    let static_dir = db_path.join("static_files");
     let sf = StaticFileProvider::<EthPrimitives>::read_only(static_dir, true)?;
     let tx_jar = sf.get_segment_provider_from_block(
         StaticFileSegment::Transactions,

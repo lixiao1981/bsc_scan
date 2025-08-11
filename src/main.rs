@@ -51,6 +51,12 @@ fn run() -> Result<()> {
         Commands::TransactionsTest { static_dir, block } => {
             bsc_scan::tranactions::test_transactions(static_dir, block)?;
         }
+        Commands::CubeDemo { db_path, block, tx } => {
+            let tx_hash_opt = tx
+                .as_deref()
+                .and_then(|s| s.parse().ok());
+            bsc_scan::cube_med::demo_common(db_path, block, tx_hash_opt)?;
+        }
     }
 
     Ok(())

@@ -7,6 +7,8 @@ pub mod mdbx;
 pub mod al;
 pub mod receipts;
 pub mod tranactions;
+pub mod cube_med;
+pub mod cube;
 /// 初始化 tracing（可传入日志级别；否则读取环境变量，默认 info）
 pub fn init_tracing(level: Option<&str>) {
 	use tracing_subscriber::{EnvFilter, fmt, prelude::*};

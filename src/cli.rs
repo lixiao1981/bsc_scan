@@ -50,4 +50,16 @@ pub enum Commands {
         #[arg(value_name = "BLOCK_NUMBER")]
         block: u64,
     },
+    /// 演示 _provider 常见用法（区块头/交易/回执/体索引/状态）
+    CubeDemo {
+        /// 数据目录路径（包含 reth/bsc 数据库）
+        #[arg(long, value_name = "PATH")]
+        db_path: String,
+        /// 区块号
+        #[arg(value_name = "BLOCK_NUMBER")]
+        block: u64,
+        /// 可选：交易哈希（0x 开头）
+        #[arg(long, value_name = "TX_HASH")] 
+        tx: Option<String>,
+    },
 }

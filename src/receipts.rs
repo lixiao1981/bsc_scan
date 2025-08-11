@@ -5,9 +5,16 @@ use reth_db::static_file::ReceiptMask;
 use reth_ethereum_primitives::{EthPrimitives, Receipt};   // Reth 内置的 Receipt 类型
 
 /// 从指定 static_files 目录中，读取包含给定块号的 receipts 段并打印摘要
-pub fn test_receipts(static_dir: impl Into<PathBuf>, block_in_segment: u64) -> eyre::Result<()> {
+pub fn test_receipts(path: impl Into<PathBuf>, block_in_segment: u64) -> eyre::Result<()> {
+    // 0) 兼容传入数据目录或 static_files 目录
+    let p: PathBuf = path.into();
+    let static_dir = {
+        let candidate = p.join("static_files");
+        if candidate.is_dir() { candidate } else { p }
+    };
+
     // 1) 打开静态文件提供者（压缩：true）
-    let sf_provider = StaticFileProvider::<EthPrimitives>::read_only(static_dir.into(), true)?;
+    let sf_provider = StaticFileProvider::<EthPrimitives>::read_only(static_dir, true)?;
 
     // 2) 获取包含该块号的 receipts 段 jar
     let jar = sf_provider.get_segment_provider_from_block(
