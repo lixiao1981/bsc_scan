@@ -27,9 +27,11 @@ reth-db-api = { git = "https://github.com/bnb-chain/reth.git", package = "reth-d
 reth-storage-errors = { git = "https://github.com/bnb-chain/reth.git", package = "reth-storage-errors", branch = "main", default-features = false }
 #reth-static-file = { git = "https://github.com/bnb-chain/reth.git", package = "reth-static-file", branch = "main", default-features = false }
 reth-revm = { git = "https://github.com/bnb-chain/reth.git", package = "reth-revm", branch = "main", default-features = false }
-alloy-eips = { git = "https://github.com/bnb-chain/reth.git", package = "alloy-eips", branch = "main", default-features = false }
+#alloy-eips = { git = "https://github.com/bnb-chain/reth.git", package = "alloy-eips", branch = "main", default-features = false }
+alloy-eips = { version = "1.0.23", default-features = false }
 # Alloy crates are best consumed from crates.io; using git failed to locate the packages by name.
 alloy-json-rpc = { version = "1.0.23", default-features = false }
 alloy-primitives = { version = "1.3.0", default-features = false, features = ["map-foldhash"] }
 alloy-consensus = { version = "1.0.24", default-features = false }
 revm-inspectors = "0.27.1"
+alloy-evm = "0.17.0"
