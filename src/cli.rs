@@ -77,4 +77,14 @@ pub enum Commands {
         #[arg(value_name = "BLOCK_NUMBER")]
         block: u64,
     },
+    /// 执行单区块 EVM 追踪，输出 CREATE/CREATE2 合约创建 (evm_ct_test)
+    #[command(name = "evm_ct_test")]
+    EvmCtTest {
+        /// 数据目录路径（包含 reth/bsc 数据库）
+        #[arg(long, value_name = "PATH")]
+        db_path: String,
+        /// 区块号
+        #[arg(value_name = "BLOCK_NUMBER")]
+        block: u64,
+    },
 }

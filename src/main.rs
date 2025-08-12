@@ -64,6 +64,9 @@ fn run() -> Result<()> {
             let db = BscDatabase::new(db_path)?;
             bsc_scan::scan_ct::print_block_contract_creations(&db, block)?;
         }
+        Commands::EvmCtTest { db_path, block } => {
+            bsc_scan::evm_ct::evm_ct_test(block, db_path)?;
+        }
     }
 
     Ok(())
